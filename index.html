@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LifeForge // FUTURE_OS v2.0</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Outfit:wght@300;600;800&family=Instrument+Serif:ital@0;1&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+    <canvas id="particle-canvas"></canvas>
+    <div class="grid-overlay"></div>
+
+    <div class="container">
+        <nav>
+            <div class="logo">LIFE<span>FORGE</span> <span style="font-size:0.6rem;opacity:0.4;">// v2.0</span></div>
+            <ul>
+                <li><a href="#explorer">EXPLORE</a></li>
+                <li><a href="#features">FEATURES</a></li>
+                <li><a href="#how">HOW IT WORKS</a></li>
+            </ul>
+            <!-- <a href="#waitlist" class="nav-cta">JOIN WAITLIST</a> -->
+            <a href="https://xaveriacave.github.io/LifeLogs/" class="nav-cta">TRY ENGINE</a>
+        </nav>
+
+        <!-- HERO -->
+        <section id="hero">
+            <div class="hero-badge">◆ FUTURE_OS BETA — EARLY ACCESS OPEN</div>
+            <h1>PLAN YOUR<br /><span class="glitch-text" data-text="possible futures">possible futures</span><br />WITH
+                AI.</h1>
+            <p class="hero-sub">LifeForge is a personal life planning engine. Input your career, finances, and goals.
+                Simulate multiple futures. Compare paths. Execute with clarity.</p>
+            <div class="xp-container">
+                <div class="xp-label"><span>LIFE_CLARITY_SCORE</span><span id="xp-pct">0%</span></div>
+                <div class="xp-track">
+                    <div class="xp-bar" id="hero-xp"></div>
+                </div>
+            </div>
+            <div class="hero-form" id="heroFormWrap">
+                <input type="email" id="heroEmail" class="hud-input" placeholder="ENTER_YOUR_EMAIL" />
+                <button class="btn-glitch" onclick="heroSubmit()">DEPLOY MY FUTURE →</button>
+            </div>
+            <div class="hero-success" id="heroSuccess">// ACCESS_GRANTED · WELCOME TO LIFEFORGE</div>
+            <div class="hero-stat">
+                <div class="dot"></div><span id="count-num">2,400</span>+ OPERATIVES ENLISTED · FREE DURING BETA
+            </div>
+        </section>
+    </div>
+
+    <!-- TICKER -->
+    <div class="ticker-wrap">
+        <div class="ticker">
+            <div class="ticker-item">MULTI-TIMELINE ROADMAPS <span>◆</span></div>
+            <div class="ticker-item">SCENARIO SIMULATION <span>◆</span></div>
+            <div class="ticker-item">FINANCIAL PROJECTIONS <span>◆</span></div>
+            <div class="ticker-item">DECISION ENGINE <span>◆</span></div>
+            <div class="ticker-item">PROBABILISTIC GUIDANCE <span>◆</span></div>
+            <div class="ticker-item">AI LIFE PLANNING <span>◆</span></div>
+            <div class="ticker-item">MULTI-TIMELINE ROADMAPS <span>◆</span></div>
+            <div class="ticker-item">SCENARIO SIMULATION <span>◆</span></div>
+            <div class="ticker-item">FINANCIAL PROJECTIONS <span>◆</span></div>
+            <div class="ticker-item">DECISION ENGINE <span>◆</span></div>
+            <div class="ticker-item">PROBABILISTIC GUIDANCE <span>◆</span></div>
+            <div class="ticker-item">AI LIFE PLANNING <span>◆</span></div>
+        </div>
+    </div>
+
+    <!-- SCENARIO EXPLORER -->
+    <section id="explorer">
+        <div class="container">
+            <div class="section-tag">SCENARIO_EXPLORER</div>
+            <h2 class="section-h2">SIMULATE YOUR<br /><span style="color:var(--gold);">LIFE PATHS.</span></h2>
+            <p style="color:var(--muted);font-size:0.85rem;font-family:var(--mono);letter-spacing:1px;margin-top:8px;">
+                SELECT A SCENARIO → VIEW PROJECTED OUTCOMES</p>
+
+            <div class="explorer-layout reveal">
+                <div class="choice-panel">
+                    <div class="choice-header">// SELECT_SCENARIO</div>
+                    <button class="choice-btn active" onclick="switchScenario('a',this)">
+                        <div class="choice-label">PATH_01</div>UPSKILL + CAREER SWITCH<div class="choice-risk risk-med">
+                            RISK: MEDIUM</div>
+                    </button>
+                    <button class="choice-btn" onclick="switchScenario('b',this)">
+                        <div class="choice-label">PATH_02</div>STAY CURRENT ROLE<div class="choice-risk risk-low">RISK:
+                            LOW</div>
+                    </button>
+                    <button class="choice-btn" onclick="switchScenario('c',this)">
+                        <div class="choice-label">PATH_03</div>LAUNCH OWN VENTURE<div class="choice-risk risk-high">
+                            RISK: HIGH</div>
+                    </button>
+                    <button class="choice-btn" onclick="switchScenario('d',this)">
+                        <div class="choice-label">PATH_04</div>RELOCATE / NEW MARKET<div class="choice-risk risk-med">
+                            RISK: MEDIUM</div>
+                    </button>
+                    <button class="choice-btn" onclick="switchScenario('e',this)">
+                        <div class="choice-label">PATH_05</div>BUILD PASSIVE INCOME<div class="choice-risk risk-med">
+                            RISK: MEDIUM</div>
+                    </button>
+                </div>
+
+                <div class="output-panel">
+                    <div class="scenario-content active" id="sc-a">
+                        <div class="scenario-id">PATH_01 · UPSKILL AND SWITCH CAREERS</div>
+                        <div class="timeline-track">
+                            <div class="t-item">
+                                <div class="t-year">MONTHS 1–12</div>
+                                <div class="t-text">Identify skill gap. Enroll in targeted learning. Build 2 portfolio
+                                    projects. Begin networking in new sector.</div>
+                            </div>
+                            <div class="t-item">
+                                <div class="t-year">YEAR 1–2 · TRANSITION</div>
+                                <div class="t-text">Land first role in new field. <strong>Salary jump: 30–60%
+                                        typical</strong> for skilled switchers. Steeper curve, higher ceiling.</div>
+                            </div>
+                            <div class="t-item">
+                                <div class="t-year">YEAR 3–4 · GROWTH</div>
+                                <div class="t-text">First promotion window opens. <strong>High earning trajectory
+                                        begins.</strong> Savings rate improves significantly.</div>
+                            </div>
+                            <div class="t-item">
+                                <div class="t-year">YEAR 5 · MILESTONE WINDOW</div>
+                                <div class="t-text">Asset accumulation or entrepreneurial runway unlocked.
+                                    <strong>Compounding advantage activates.</strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="stat-row">
+                            <div class="stat-box">
+                                <div class="stat-label">5-YR UPSIDE</div>
+                                <div class="stat-val">HIGH</div>
+                                <div class="stat-sub">vs current path</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-label">TRANSITION TIME</div>
+                                <div class="stat-val">8–14 MO</div>
+                                <div class="stat-sub">typical range</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-label">CONFIDENCE</div>
+                                <div class="stat-val">68–74%</div>
+                                <div class="stat-sub">based on patterns</div>
+                            </div>
+                        </div>
+                        <div class="conf-bar-wrap">
+                            <div class="conf-bar-label"><span>PATH VIABILITY</span><span>71%</span></div>
+                            <div class="conf-track">
+                                <div class="conf-fill" style="width:71%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="scenario-content" id="sc-b">
+                        <div class="scenario-id">PATH_02 · STAY CURRENT ROLE, OPTIMIZE WITHIN</div>
+                        <div class="timeline-track">
+                            <div class="t-item">
+                                <div class="t-year">YEAR 1</div>
+                                <div class="t-text">Annual increments. Deep specialization. Stability and
+                                    predictability. Low disruption, low ceiling.</div>
+                            </div>
+                            <div class="t-item">
+                                <div class="t-year">YEAR 2–3</div>
+                                <div class="t-text">Possible internal promotion. <strong>Moderate income
+                                        growth.</strong> Savings compound steadily.</div>
+                            </div>
+                            <div class="t-item">
+                                <div class="t-year">YEAR 4–5</div>
+                                <div class="t-text">Ceiling becomes visible. Market differentiation narrows.
+                                    <strong>Milestones shift to 4–6 year window.</strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="stat-row">
+                            <div class="stat-box">
+                                <div class="stat-label">5-YR UPSIDE</div>
+                                <div class="stat-val">STABLE</div>
+                                <div class="stat-sub">low variance</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-label">INCOME GROWTH</div>
+                                <div class="stat-val">8–12%</div>
+                                <div class="stat-sub">per year typical</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-label">CONFIDENCE</div>
+                                <div class="stat-val">80–88%</div>
+                                <div class="stat-sub">high predictability</div>
+                            </div>
+                        </div>
+                        <div class="conf-bar-wrap">
+                            <div class="conf-bar-label"><span>PATH VIABILITY</span><span>84%</span></div>
+                            <div class="conf-track">
+                                <div class="conf-fill" style="width:84%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="scenario-content" id="sc-c">
+                        <div class="scenario-id">PATH_03 · LAUNCH YOUR OWN VENTURE</div>
+                        <div class="timeline-track">
+                            <div class="t-item">
+                                <div class="t-year">MONTHS 1–18 · VALIDATE</div>
+                                <div class="t-text">Build & test while employed. <strong>Target: side revenue covering
+                                        50–60% of expenses</strong> before committing fully.</div>
+                            </div>
+                            <div class="t-item">
+                                <div class="t-year">YEAR 2 · DECISION POINT</div>
+                                <div class="t-text">Go full-time only with 6-month emergency fund. High-risk, asymmetric
+                                    upside. <strong>Most fail without financial runway.</strong></div>
+                            </div>
+                            <div class="t-item">
+                                <div class="t-year">YEAR 3–5 · VARIABLE</div>
+                                <div class="t-text">Wide outcome range. <strong>Top quartile: 5–10x income
+                                        potential.</strong> Bottom quartile: return to employment.</div>
+                            </div>
+                        </div>
+                        <div class="stat-row">
+                            <div class="stat-box">
+                                <div class="stat-label">5-YR UPSIDE</div>
+                                <div class="stat-val">EXTREME</div>
+                                <div class="stat-sub">high variance</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-label">RISK LEVEL</div>
+                                <div class="stat-val">HIGH</div>
+                                <div class="stat-sub">wide outcomes</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-label">CONFIDENCE</div>
+                                <div class="stat-val">30–55%</div>
+                                <div class="stat-sub">execution-dependent</div>
+                            </div>
+                        </div>
+                        <div class="conf-bar-wrap">
+                            <div class="conf-bar-label"><span>PATH VIABILITY</span><span>42%</span></div>
+                            <div class="conf-track">
+                                <div class="conf-fill" style="width:42%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="scenario-content" id="sc-d">
+                        <div class="scenario-id">PATH_04 · RELOCATE TO A NEW MARKET</div>
+                        <div class="timeline-track">
+                            <div class="t-item">
+                                <div class="t-year">MONTHS 1–6 · PLAN</div>
+                                <div class="t-text">Research target market. Visa/permit timelines. Cost of living delta.
+                                    Build job pipeline before the move.</div>
+                            </div>
+                            <div class="t-item">
+                                <div class="t-year">YEAR 1–2 · ADAPT</div>
+                                <div class="t-text"><strong>Income often doubles</strong> in higher-cost markets.
+                                    Expenses spike initially. Network rebuild required.</div>
+                            </div>
+                            <div class="t-item">
+                                <div class="t-year">YEAR 3–5</div>
+                                <div class="t-text">Strong savings velocity if managed well. <strong>Wealth accumulation
+                                        accelerates.</strong> Career ceiling frequently much higher.</div>
+                            </div>
+                        </div>
+                        <div class="stat-row">
+                            <div class="stat-box">
+                                <div class="stat-label">5-YR UPSIDE</div>
+                                <div class="stat-val">HIGH</div>
+                                <div class="stat-sub">market-dependent</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-label">ADJUSTMENT</div>
+                                <div class="stat-val">6–12 MO</div>
+                                <div class="stat-sub">transition window</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-label">CONFIDENCE</div>
+                                <div class="stat-val">60–72%</div>
+                                <div class="stat-sub">high variability</div>
+                            </div>
+                        </div>
+                        <div class="conf-bar-wrap">
+                            <div class="conf-bar-label"><span>PATH VIABILITY</span><span>66%</span></div>
+                            <div class="conf-track">
+                                <div class="conf-fill" style="width:66%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="scenario-content" id="sc-e">
+                        <div class="scenario-id">PATH_05 · BUILD PASSIVE INCOME STREAMS</div>
+                        <div class="timeline-track">
+                            <div class="t-item">
+                                <div class="t-year">YEAR 1 · BUILD</div>
+                                <div class="t-text">Invest a fixed % of income. Launch one digital or income-generating
+                                    asset. <strong>Start with 1 stream only.</strong></div>
+                            </div>
+                            <div class="t-item">
+                                <div class="t-year">YEAR 2–3 · COMPOUND</div>
+                                <div class="t-text">First meaningful passive income visible. <strong>Consistent earners
+                                        see meaningful monthly passive flows.</strong> Reinvest aggressively.</div>
+                            </div>
+                            <div class="t-item">
+                                <div class="t-year">YEAR 4–5 · FREEDOM WINDOW</div>
+                                <div class="t-text"><strong>Financial optionality unlocks.</strong> Passive income may
+                                    cover 20–50% of expenses. Risky career moves become lower-stakes.</div>
+                            </div>
+                        </div>
+                        <div class="stat-row">
+                            <div class="stat-box">
+                                <div class="stat-label">5-YR UPSIDE</div>
+                                <div class="stat-val">MEDIUM</div>
+                                <div class="stat-sub">steady compounding</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-label">TIME TO RESULTS</div>
+                                <div class="stat-val">2–3 YRS</div>
+                                <div class="stat-sub">with consistency</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-label">CONFIDENCE</div>
+                                <div class="stat-val">65–78%</div>
+                                <div class="stat-sub">execution-dependent</div>
+                            </div>
+                        </div>
+                        <div class="conf-bar-wrap">
+                            <div class="conf-bar-label"><span>PATH VIABILITY</span><span>71%</span></div>
+                            <div class="conf-track">
+                                <div class="conf-fill" style="width:71%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DECISION CARDS -->
+    <section id="decisions">
+        <div class="container">
+            <div class="section-tag">LIFE_DECISIONS</div>
+            <h2 class="section-h2">EVERY BIG QUESTION<br /><span style="color:var(--gold);">HAS A FRAMEWORK.</span></h2>
+            <p style="color:var(--muted);font-size:0.82rem;font-family:var(--mono);letter-spacing:1px;margin-top:8px;">
+                CLICK ANY CARD TO EXPLORE THE FULL SCENARIO</p>
+            <div class="decisions-grid">
+                <div class="decision-card reveal" onclick="openDecision('switch')">
+                    <div class="dc-icon">⚔️</div>
+                    <div class="dc-q">SCENARIO_TYPE · CAREER</div>
+                    <div class="dc-title">Switch careers or deepen expertise?</div>
+                    <div class="dc-desc">Breadth vs. depth. When to pivot and when to double down on what you already
+                        know.</div>
+                </div>
+                <div class="decision-card reveal" onclick="openDecision('solo')">
+                    <div class="dc-icon">🏢</div>
+                    <div class="dc-q">SCENARIO_TYPE · BUSINESS</div>
+                    <div class="dc-title">Go solo or stay employed?</div>
+                    <div class="dc-desc">Corporate stability vs. entrepreneurial upside. How to know when you're truly
+                        ready.</div>
+                </div>
+                <div class="decision-card reveal" onclick="openDecision('relocate')">
+                    <div class="dc-icon">🌍</div>
+                    <div class="dc-q">SCENARIO_TYPE · LIFESTYLE</div>
+                    <div class="dc-title">Stay where you are or relocate?</div>
+                    <div class="dc-desc">New city, new country, new market. What the numbers actually look like before
+                        and after the move.</div>
+                </div>
+                <div class="decision-card reveal" onclick="openDecision('money')">
+                    <div class="dc-icon">⏰</div>
+                    <div class="dc-q">SCENARIO_TYPE · FINANCIAL</div>
+                    <div class="dc-title">Optimize for now or invest for later?</div>
+                    <div class="dc-desc">Lifestyle spending vs. aggressive saving. The real cost of delaying financial
+                        decisions by 1–3 years.</div>
+                </div>
+                <div class="decision-card reveal" onclick="openDecision('side')">
+                    <div class="dc-icon">⚡</div>
+                    <div class="dc-q">SCENARIO_TYPE · GROWTH</div>
+                    <div class="dc-title">Build a side income or focus 100%?</div>
+                    <div class="dc-desc">Diversification vs. deep focus. When split energy helps, and when it kills both
+                        paths.</div>
+                </div>
+                <div class="decision-card reveal" onclick="openDecision('grind')">
+                    <div class="dc-icon">🏔️</div>
+                    <div class="dc-q">SCENARIO_TYPE · FREEDOM</div>
+                    <div class="dc-title">Grind hard now or prioritize freedom?</div>
+                    <div class="dc-desc">10-year sprint vs. sustainable pace. Burnout risk, wealth accumulation, and
+                        quality of life modeled side by side.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section id="features">
+        <div class="container">
+            <div class="section-tag">SYSTEM_CAPABILITIES</div>
+            <h2 class="section-h2">YOUR LIFE.<br /><span style="color:var(--gold);">FULLY MAPPED.</span></h2>
+            <div class="features-grid">
+                <div class="feature-card reveal">
+                    <div class="card-num">// 01</div><span class="card-icon">🗺️</span>
+                    <h3>Multi-Timeline Roadmaps</h3>
+                    <p>3, 5, and 10-year projections for career, finances, and lifestyle milestones built from your
+                        actual inputs.</p>
+                </div>
+                <div class="feature-card reveal">
+                    <div class="card-num">// 02</div><span class="card-icon">🔀</span>
+                    <h3>Scenario Simulation</h3>
+                    <p>Run "what if" branches. Each shows income trajectory, risk level, lifestyle impact, and
+                        probability-based outcomes.</p>
+                </div>
+                <div class="feature-card reveal">
+                    <div class="card-num">// 03</div><span class="card-icon">📋</span>
+                    <h3>Monthly Action Plans</h3>
+                    <p>Concrete monthly steps — skill builds, saving targets, career checkpoints — tailored to your
+                        chosen path.</p>
+                </div>
+                <div class="feature-card reveal">
+                    <div class="card-num">// 04</div><span class="card-icon">🧠</span>
+                    <h3>Smart Recommendations</h3>
+                    <p>Context-aware signals on when to switch, upskill, or act — based on your stage, risk appetite,
+                        and market data.</p>
+                </div>
+                <div class="feature-card reveal">
+                    <div class="card-num">// 05</div><span class="card-icon">📊</span>
+                    <h3>Interactive Dashboard</h3>
+                    <p>Tweak salary, risk, goals — see projections update instantly. Compare strategies side-by-side in
+                        real time.</p>
+                </div>
+                <div class="feature-card reveal">
+                    <div class="card-num">// 06</div><span class="card-icon">🔒</span>
+                    <h3>Probabilistic, Not Predictive</h3>
+                    <p>Every projection shows likelihood windows and assumptions. Explore futures — don't claim to
+                        predict them.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section id="how">
+        <div class="container">
+            <div class="section-tag">MISSION_BRIEFING</div>
+            <h2 class="section-h2" style="text-align:center;margin-bottom:48px;">FROM YOUR DATA<br /><span
+                    style="color:var(--gold);">TO YOUR ROADMAP.</span></h2>
+            <div class="steps-grid">
+                <div class="step reveal">
+                    <div class="step-num"><span>01</span></div>
+                    <h3>Profile Upload</h3>
+                    <p>Share career, income, savings, goals, and risk appetite. Encrypted, never sold.</p>
+                </div>
+                <div class="step reveal">
+                    <div class="step-num"><span>02</span></div>
+                    <h3>AI Builds Scenarios</h3>
+                    <p>Engine generates 3–5 life paths using your data, market signals, and stated priorities.</p>
+                </div>
+                <div class="step reveal">
+                    <div class="step-num"><span>03</span></div>
+                    <h3>Explore & Compare</h3>
+                    <p>Visualize each path. Adjust variables in real time. See outcomes shift as you change inputs.</p>
+                </div>
+                <div class="step reveal">
+                    <div class="step-num"><span>04</span></div>
+                    <h3>Execute the Plan</h3>
+                    <p>Get a monthly roadmap with concrete steps, skill milestones, and financial targets.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROOF -->
+    <section id="proof">
+        <div class="container">
+            <div class="section-tag">FIELD_REPORTS</div>
+            <h2 class="section-h2" style="margin-bottom:48px;">WHAT OPERATIVES SAY.</h2>
+            <div class="proof-grid">
+                <div class="proof-card reveal">
+                    <div class="stars">★★★★★</div>
+                    <p class="proof-quote">"I'd been paralyzed between switching careers and staying put for over a
+                        year. LifeForge showed me exactly what each path looked like — and made the decision clear."</p>
+                    <div class="proof-meta">
+                        <div class="proof-avatar"><span>AK</span></div>
+                        <div>
+                            <div class="proof-name">Alex K.</div>
+                            <div class="proof-role">Software Engineer · Age 27</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="proof-card reveal">
+                    <div class="stars">★★★★★</div>
+                    <p class="proof-quote">"Finally something that doesn't give generic advice. It modeled my actual
+                        income and savings rate and showed me what 3 different trajectories look like in 5 years."</p>
+                    <div class="proof-meta">
+                        <div class="proof-avatar"><span>PM</span></div>
+                        <div>
+                            <div class="proof-name">Priya M.</div>
+                            <div class="proof-role">Product Manager · Age 29</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="proof-card reveal">
+                    <div class="stars">★★★★★</div>
+                    <p class="proof-quote">"The relocation scenario was different. It used my actual numbers — showed me
+                        the first-year dip and when I'd recover. Not a blog post. An actual plan."</p>
+                    <div class="proof-meta">
+                        <div class="proof-avatar"><span>ST</span></div>
+                        <div>
+                            <div class="proof-name">Sam T.</div>
+                            <div class="proof-role">Data Analyst · Age 25</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WAITLIST -->
+    <section id="waitlist">
+        <div class="container">
+            <div id="waitlistContent">
+                <div class="section-tag" style="justify-content:center;">MISSION_ENLIST</div>
+                <h2 class="section-h2" style="font-size:clamp(2rem,5vw,4rem);">YOUR FUTURE IS<br /><span
+                        style="color:var(--gold);font-family:'Instrument Serif',serif;font-style:italic;text-transform:none;font-size:1.1em;">worth
+                        planning.</span></h2>
+                <p
+                    style="color:var(--muted);font-family:var(--mono);font-size:0.72rem;letter-spacing:2px;margin-top:16px;">
+                    FREE DURING BETA · EARLY ACCESS ONLY</p>
+                <div class="countdown-row">
+                    <div class="cd-unit"><span class="cd-num" id="cd-days">21</span>
+                        <div class="cd-label">DAYS</div>
+                    </div>
+                    <div class="cd-sep">:</div>
+                    <div class="cd-unit"><span class="cd-num" id="cd-hours">00</span>
+                        <div class="cd-label">HRS</div>
+                    </div>
+                    <div class="cd-sep">:</div>
+                    <div class="cd-unit"><span class="cd-num" id="cd-mins">00</span>
+                        <div class="cd-label">MIN</div>
+                    </div>
+                    <div class="cd-sep">:</div>
+                    <div class="cd-unit"><span class="cd-num" id="cd-secs">00</span>
+                        <div class="cd-label">SEC</div>
+                    </div>
+                </div>
+                <div class="waitlist-form">
+                    <div class="waitlist-inputs">
+                        <input type="text" id="wName" class="hud-input" placeholder="YOUR_NAME" />
+                        <input type="email" id="wEmail" class="hud-input" placeholder="YOUR_EMAIL" />
+                    </div>
+                    <button class="btn-glitch" onclick="waitlistSubmit()" style="padding:13px 40px;">CLAIM MY SPOT
+                        →</button>
+                    <p class="waitlist-disclaimer">// NO SPAM · NO CREDIT CARD · BETA ACCESS ONLY</p>
+                </div>
+            </div>
+            <div class="waitlist-success-state" id="waitlistSuccess">
+                <h3>// ACCESS_GRANTED</h3>
+                <p>You're enlisted. We'll reach out when your beta access is ready. Welcome to LifeForge, operative.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-logo">LIFE<span>FORGE</span> <span style="font-size:0.6rem;opacity:0.3;">// FUTURE_OS</span>
+        </div>
+        <p>© 2025 LIFEFORGE · ALL FUTURES RESERVED</p>
+        <div class="footer-links"><a href="#">PRIVACY</a><a href="#">TERMS</a><a href="#">CONTACT</a><a
+                href="#">TWITTER</a></div>
+    </footer>
+
+    <!-- DECISION OVERLAY -->
+    <div class="decision-overlay" id="decisionOverlay">
+        <div class="overlay-box">
+            <div class="ov-topbar">
+                <div class="ov-id" id="ov-id">// SCENARIO_DETAIL</div>
+                <button class="close-btn" onclick="closeDecision()">[ ESC ]</button>
+            </div>
+            <div class="ov-body">
+                <div class="ov-question" id="ov-q"></div>
+                <div class="ov-title" id="ov-title"></div>
+                <div class="ov-desc" id="ov-desc"></div>
+                <div class="ov-paths">
+                    <div class="ov-path">
+                        <div class="ov-path-label">PATH A — OPTION 1</div>
+                        <h4 id="ov-a-title"></h4>
+                        <ul id="ov-a-list"></ul>
+                    </div>
+                    <div class="ov-path">
+                        <div class="ov-path-label">PATH B — OPTION 2</div>
+                        <h4 id="ov-b-title"></h4>
+                        <ul id="ov-b-list"></ul>
+                    </div>
+                </div>
+                <button class="btn-glitch" style="width:100%"
+                    onclick="closeDecision();document.getElementById('waitlist').scrollIntoView({behavior:'smooth'})">GET
+                    MY PERSONALIZED PLAN →</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
