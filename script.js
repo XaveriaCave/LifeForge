@@ -1,5 +1,5 @@
 // ── CONFIG ──
-const SHEET_ENDPOINT = 'https://script.google.com/macros/s/AKfycby0iqPcxZdU2pbj1b_Hv2lKkDtwJrHEaYJ276xugtw-j2WZFRxHqS4RyR1GfOnHpwHw/exec';
+const SHEET_ENDPOINT = 'https://script.google.com/macros/s/AKfycbwJPi0UIGkkln3SC4F-Hrd9xpFaYB2MQTj2u2UrrAVwB_oNKJEJnHA5ZpWfBq1qjJys/exec';
 
 // ── SUBMIT TO GOOGLE SHEET ──
 // Uses a hidden iframe trick to bypass CORS entirely — works 100% with Apps Script
