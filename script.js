@@ -1,41 +1,24 @@
 // ── CONFIG ──
-const SHEET_ENDPOINT = 'https://script.google.com/macros/s/AKfycbwJPi0UIGkkln3SC4F-Hrd9xpFaYB2MQTj2u2UrrAVwB_oNKJEJnHA5ZpWfBq1qjJys/exec';
+const SHEET_ENDPOINT = 'https://script.google.com/macros/s/AKfycby7HrxnZhHRrhA8wQ4IWXyWsEMfuQV0t6MNaSB7FRlm07rA85QJ76uyceUAZkgFcTk/exec';
 
 // ── SUBMIT TO GOOGLE SHEET ──
-// Uses a hidden iframe trick to bypass CORS entirely — works 100% with Apps Script
+// URLSearchParams + no-cors is the only method that works cross-origin with Apps Script
 function submitEmail(email, source) {
-    try {
-        const form = document.createElement('form');
-        form.method = 'POST';
-        form.action = SHEET_ENDPOINT;
-        form.target = '_waitlist_iframe'; // post into hidden iframe, no CORS issue
+    const body = new URLSearchParams();
+    body.append('email', email);
+    body.append('source', source);
+    body.append('timestamp', new Date().toISOString());
 
-        const fields = { email, source, timestamp: new Date().toISOString() };
-        Object.entries(fields).forEach(([k, v]) => {
-            const input = document.createElement('input');
-            input.type = 'hidden';
-            input.name = k;
-            input.value = v;
-            form.appendChild(input);
-        });
-
-        // Hidden iframe so page doesn't navigate
-        let iframe = document.getElementById('_waitlist_iframe');
-        if (!iframe) {
-            iframe = document.createElement('iframe');
-            iframe.name = '_waitlist_iframe';
-            iframe.id = '_waitlist_iframe';
-            iframe.style.display = 'none';
-            document.body.appendChild(iframe);
-        }
-
-        document.body.appendChild(form);
-        form.submit();
-        document.body.removeChild(form);
-        console.log('Waitlist submission sent:', email, source);
-    } catch (e) {
-        console.error('Submission error:', e);
-    }
+    fetch(SHEET_ENDPOINT, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: body.toString()
+    }).then(() => {
+        console.log('Submitted:', email, source);
+    }).catch(err => {
+        console.error('Submit error:', err);
+    });
 }
 
 // ── PARTICLES ──
