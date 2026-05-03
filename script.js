@@ -1,17 +1,40 @@
-// ── CONFIG ── Replace with your Apps Script Web App URL after setup
-const SHEET_ENDPOINT = 'https://script.google.com/macros/s/AKfycbybesZrKSHmOkXVQ_yAurVs4AA5FAegNwB7z7Mxat-kPRJ88ZhIoJ9bZDQpGdNFa65b/exec';
+// ── CONFIG ──
+const SHEET_ENDPOINT = 'https://script.google.com/macros/s/AKfycby0iqPcxZdU2pbj1b_Hv2lKkDtwJrHEaYJ276xugtw-j2WZFRxHqS4RyR1GfOnHpwHw/exec';
 
 // ── SUBMIT TO GOOGLE SHEET ──
-async function submitEmail(email, source) {
+// Uses a hidden iframe trick to bypass CORS entirely — works 100% with Apps Script
+function submitEmail(email, source) {
     try {
-        await fetch(SHEET_ENDPOINT, {
-            method: 'POST',
-            mode: 'no-cors', // required for Apps Script CORS
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, source, timestamp: new Date().toISOString() })
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = SHEET_ENDPOINT;
+        form.target = '_waitlist_iframe'; // post into hidden iframe, no CORS issue
+
+        const fields = { email, source, timestamp: new Date().toISOString() };
+        Object.entries(fields).forEach(([k, v]) => {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = k;
+            input.value = v;
+            form.appendChild(input);
         });
+
+        // Hidden iframe so page doesn't navigate
+        let iframe = document.getElementById('_waitlist_iframe');
+        if (!iframe) {
+            iframe = document.createElement('iframe');
+            iframe.name = '_waitlist_iframe';
+            iframe.id = '_waitlist_iframe';
+            iframe.style.display = 'none';
+            document.body.appendChild(iframe);
+        }
+
+        document.body.appendChild(form);
+        form.submit();
+        document.body.removeChild(form);
+        console.log('Waitlist submission sent:', email, source);
     } catch (e) {
-        console.log('Submission sent');
+        console.error('Submission error:', e);
     }
 }
 
@@ -78,7 +101,7 @@ async function heroSubmit() {
     document.getElementById('heroSuccess').style.display = 'block';
     const n = parseInt(document.getElementById('count-num').textContent.replace(',', ''));
     document.getElementById('count-num').textContent = (n + 1).toLocaleString();
-    await submitEmail(email, 'hero_cta');
+    submitEmail(email, 'hero_cta');
 }
 document.getElementById('heroEmail').addEventListener('keydown', e => { if (e.key === 'Enter') heroSubmit(); });
 
@@ -92,7 +115,7 @@ async function waitlistSubmit() {
     }
     document.getElementById('waitlistContent').style.display = 'none';
     document.getElementById('waitlistSuccess').style.display = 'block';
-    await submitEmail(email, 'waitlist_section');
+    submitEmail(email, 'waitlist_section');
 }
 document.getElementById('wEmail').addEventListener('keydown', e => { if (e.key === 'Enter') waitlistSubmit(); });
 
