@@ -1,5 +1,5 @@
 // ── CONFIG ──
-const SHEET_ENDPOINT = 'https://script.google.com/macros/s/AKfycby7HrxnZhHRrhA8wQ4IWXyWsEMfuQV0t6MNaSB7FRlm07rA85QJ76uyceUAZkgFcTk/exec';
+const SHEET_ENDPOINT = 'https://mute-mode-3033.adarshmsd1.workers.dev//';
 
 // ── SUBMIT TO GOOGLE SHEET ──
 // URLSearchParams + no-cors is the only method that works cross-origin with Apps Script
