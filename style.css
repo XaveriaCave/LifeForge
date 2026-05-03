@@ -856,6 +856,8 @@ nav ul a:hover {
     align-items: center;
     justify-content: center;
     backdrop-filter: blur(8px);
+    padding: 16px;
+    box-sizing: border-box;
 }
 
 .decision-overlay.active {
@@ -866,12 +868,14 @@ nav ul a:hover {
     background: var(--bg2);
     border: 1px solid var(--gold);
     max-width: 640px;
-    width: 90%;
-    max-height: 85vh;
+    width: calc(100vw - 32px);
+    max-height: 90vh;
     overflow-y: auto;
+    overflow-x: hidden;
     position: relative;
     box-shadow: 0 0 60px rgba(232, 160, 32, 0.15);
     animation: fadeUp 0.3s ease;
+    min-width: 0;
 }
 
 .overlay-box::-webkit-scrollbar {
@@ -889,10 +893,11 @@ nav ul a:hover {
 .ov-topbar {
     background: rgba(0, 0, 0, 0.5);
     border-bottom: 1px solid var(--border);
-    padding: 14px 20px;
+    padding: 14px clamp(14px, 4vw, 20px);
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 12px;
 }
 
 .ov-id {
@@ -900,6 +905,11 @@ nav ul a:hover {
     font-size: 0.68rem;
     color: var(--gold);
     letter-spacing: 2px;
+    min-width: 0;
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .close-btn {
@@ -919,7 +929,7 @@ nav ul a:hover {
 }
 
 .ov-body {
-    padding: 32px;
+    padding: clamp(16px, 5vw, 32px);
 }
 
 .ov-question {
@@ -929,15 +939,19 @@ nav ul a:hover {
     letter-spacing: 2px;
     text-transform: uppercase;
     margin-bottom: 10px;
+    word-break: break-word;
+    overflow-wrap: break-word;
 }
 
 .ov-title {
-    font-size: 1.4rem;
+    font-size: clamp(1rem, 5vw, 1.4rem);
     font-weight: 700;
     color: var(--gold);
     margin-bottom: 16px;
     text-transform: uppercase;
     letter-spacing: 1px;
+    word-break: break-word;
+    overflow-wrap: break-word;
 }
 
 .ov-desc {
@@ -945,6 +959,8 @@ nav ul a:hover {
     color: rgba(232, 234, 240, 0.6);
     line-height: 1.8;
     margin-bottom: 24px;
+    word-break: break-word;
+    overflow-wrap: break-word;
 }
 
 .ov-paths {
@@ -952,6 +968,12 @@ nav ul a:hover {
     grid-template-columns: 1fr 1fr;
     gap: 16px;
     margin-bottom: 24px;
+}
+
+@media (max-width: 480px) {
+    .ov-paths {
+        grid-template-columns: 1fr;
+    }
 }
 
 .ov-path {
